@@ -1,0 +1,33 @@
+---
+layout: layouts/default.njk
+title: Trang chủ
+---
+
+<div class="container px-5 py-24 mx-auto min-h-screen">
+  <div class="flex flex-wrap -m-4">
+    <template x-for="product in {{ products | reverse | dump }}" :key="product.id">
+      <div class="lg:w-1/4 md:w-1/2 p-4 w-full hover:scale-105 duration-100">
+        <a
+          class="block relative h-48 rounded overflow-hidden"
+          :href="'{{ '/product' | url }}/' + product.id"
+        >
+          <img
+            class="object-cover object-center w-full h-full block"
+            src="https://dummyimage.com/512x512"
+          >
+        </a>
+        <div class="mt-4">
+          <h3
+            class="opacity-75 text-xs tracking-widest title-font mb-1"
+            x-text="product.brand"
+          >...</h3>
+          <h2
+            class="title-font text-lg font-medium"
+            x-text="product.name"
+          >...</h2>
+          <p class="mt-1"><span x-text="product.price">0</span>K</p>
+        </div>
+      </div>
+    </template>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+---
+layout: layouts/default.njk
+title: Sản phẩm
+pagination:
+    data: products
+    size: 1
+    alias: product
+permalink: "product/{{ product.id | slug }}/"
+---
+
+<div class="container px-5 py-24 mx-auto">
+  <div class="lg:w-4/5 mx-auto flex flex-wrap">
+    <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+      <h2
+        class="text-sm title-font text-gray-500 tracking-widest"
+      >{{ product.brand }}</h2>
+      <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
+        {{ product.name }}
+      </h1>
+      <div class="flex mb-4">
+        <div
+          class="a2a_kit a2a_kit_size_24 a2a_default_style"
+          data-a2a-icon-color="transparent,#E3598C"
+        >
+          <a class="a2a_button_copy_link"></a>
+          <a class="a2a_button_twitter"></a>
+          <a class="a2a_button_facebook"></a>
+          <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+        </div>
+        <script async src="https://static.addtoany.com/menu/page.js"></script>
+      </div>
+      <p class="leading-relaxed mb-4">
+        {{ product.description }}
+      </p>
+      <div class="flex border-t border-gray-200 py-2">
+        <span class="text-gray-500">Color</span>
+        <span class="ml-auto text-gray-900">Blue</span>
+      </div>
+      <div class="flex border-t border-gray-200 py-2">
+        <span class="text-gray-500">Size</span>
+        <span class="ml-auto text-gray-900">Medium</span>
+      </div>
+      <div class="flex border-t border-b mb-6 border-gray-200 py-2">
+        <span class="text-gray-500">Quantity</span>
+        <span class="ml-auto text-gray-900">4</span>
+      </div>
+      <div class="flex">
+        <span class="title-font font-medium text-2xl text-gray-900">
+          {{ product.price }}K
+        </span>
+        <button class="flex ml-auto btn btn-primary">Cho vào giỏ</button>
+      </div>
+    </div>
+    <img
+      class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+      src="https://dummyimage.com/400x400"
+    >
+  </div>
+</div>
+
+<div class="max-w-4xl px-4 mb-8 mx-auto">
+  <script src="https://giscus.app/client.js"
+    data-repo="NNBnh/sneaker-shop-exam"
+    data-repo-id="R_kgDOIBhO_g"
+    data-category="Products"
+    data-category-id="DIC_kwDOIBhO_s4CRhHt"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="vi"
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>
