@@ -8,19 +8,32 @@ pagination:
 permalink: "product/{{ product.id | slug }}/"
 ---
 
-<div class="container px-5 py-24 mx-auto">
+<div
+  class="md:container px-5 pt-24 pb-12 mx-auto"
+  x-data="
+    {
+      products: {{ product.items | dump }},
+      currentItem: 0,
+      currentQuantity: 1,
+    }
+  "
+  x-init="
+    currentItem = products[0].id;
+    $watch('currentItem', () => currentQuantity = 1);
+  "
+>
   <div class="lg:w-4/5 mx-auto flex flex-wrap">
-    <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-      <h2
-        class="text-sm title-font text-gray-500 tracking-widest"
-      >{{ product.brand }}</h2>
-      <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
-        {{ product.name }}
+    <div class="md:w-1/2 w-full md:pr-10 md:py-6 mb-6 md:mb-0">
+      <h2 class="text-sm title-font opacity-75 tracking-widest">
+        {{ product.subtitle }}
+      </h2>
+      <h1 class="text-3xl title-font font-medium mb-4">
+        {{ product.title }}
       </h1>
       <div class="flex mb-4">
         <div
           class="a2a_kit a2a_kit_size_24 a2a_default_style"
-          data-a2a-icon-color="transparent,#E3598C"
+          data-a2a-icon-color="transparent,#40ABB0"
         >
           <a class="a2a_button_copy_link"></a>
           <a class="a2a_button_twitter"></a>
@@ -29,32 +42,67 @@ permalink: "product/{{ product.id | slug }}/"
         </div>
         <script async src="https://static.addtoany.com/menu/page.js"></script>
       </div>
-      <p class="leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4 text-justify">
         {{ product.description }}
       </p>
-      <div class="flex border-t border-gray-200 py-2">
-        <span class="text-gray-500">Color</span>
-        <span class="ml-auto text-gray-900">Blue</span>
+      <div class="flex flex-wrap py-4 px-2 gap-2 border-y border-base-300">
+        <template x-for="item in products" :key="item.id">
+          <button
+            class="btn btn-sm"
+            :class="currentItem === item.id ? 'btn-secondary' : 'btn-accent'"
+            x-text="item.name"
+            @click="currentItem = item.id"
+          ></button>
+        </template>
       </div>
-      <div class="flex border-t border-gray-200 py-2">
-        <span class="text-gray-500">Size</span>
-        <span class="ml-auto text-gray-900">Medium</span>
+      <div class="flex py-4 border-b border-base-300">
+        <span class="opacity-75">Số lượng trong kho:</span>
+        <span
+          class="ml-auto font-bold"
+          x-text="products[currentItem].quantity === 0 ? 'Hết hàng' : products[currentItem].quantity"
+        >0</span>
       </div>
-      <div class="flex border-t border-b mb-6 border-gray-200 py-2">
-        <span class="text-gray-500">Quantity</span>
-        <span class="ml-auto text-gray-900">4</span>
-      </div>
-      <div class="flex">
-        <span class="title-font font-medium text-2xl text-gray-900">
-          {{ product.price }}K
+      <div class="w-full mt-6 flex items-center place-content-between">
+        <span class="title-font font-medium text-2xl">
+          <span x-text="products[currentItem].price"></span>K
         </span>
-        <button class="flex ml-auto btn btn-primary">Cho vào giỏ</button>
+        <div class="form-control">
+          <div
+            class="input-group bg-transparent"
+            :class="products[currentItem].quantity == 0 ? 'btn-disabled opacity-50' : ''"
+          >
+            <input
+              type="number"
+              class="input input-bordered input-primary w-24"
+              min="1" :max="products[currentItem].quantity"
+              x-model="currentQuantity"
+            >
+            <button class="btn btn-primary">Cho vào giỏ</button>
+          </div>
+        </div>
       </div>
     </div>
-    <img
-      class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-      src="https://dummyimage.com/400x400"
+    <div
+      class="md:w-1/2 w-full md:h-auto h-96 bg-base-200 rounded overflow-hidden relative"
+      x-data="{ images: {{ product.images | dump }}, currentImage: 0 }"
     >
+      <img
+        class="h-full mx-auto object-contain"
+        :src="images[currentImage]"
+      >
+      <button
+        class="absolute btn btn-sm btn-circle inset-y-0 my-auto left-4"
+        @click="currentImage = (currentImage === 0 ? images.length : currentImage) - 1"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+      <button
+        class="absolute btn btn-sm btn-circle inset-y-0 my-auto right-4"
+        @click="currentImage = (currentImage + 1) % images.length"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
   </div>
 </div>
 
