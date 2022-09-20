@@ -12,13 +12,13 @@ permalink: "product/{{ product.id | slug }}/"
   class="md:container px-5 pt-24 pb-12 mx-auto"
   x-data="
     {
-      products: {{ product.items | dump }},
+      items: {{ product.items | dump }},
       currentItem: 0,
       currentQuantity: 1,
     }
   "
   x-init="
-    currentItem = products[0].id;
+    currentItem = items[0].id;
     $watch('currentItem', () => currentQuantity = 1);
   "
 >
@@ -46,38 +46,59 @@ permalink: "product/{{ product.id | slug }}/"
         {{ product.description }}
       </p>
       <div class="flex flex-wrap py-4 px-2 gap-2 border-y border-base-300">
-        <template x-for="item in products" :key="item.id">
-          <button
-            class="btn btn-sm"
-            :class="currentItem === item.id ? 'btn-secondary' : 'btn-accent'"
-            x-text="item.name"
-            @click="currentItem = item.id"
-          ></button>
+        <template x-for="item in items" :key="item.id">
+          <div :class="item.quantity === 0 ? 'opacity-50' : ''">
+            <button
+              class="btn btn-sm"
+              :class="currentItem === item.id ? 'btn-secondary' : 'btn-accent'"
+              x-text="item.name"
+              @click="currentItem = item.id"
+            ></button>
+          </div>
         </template>
       </div>
       <div class="flex py-4 border-b border-base-300">
         <span class="opacity-75">Số lượng trong kho:</span>
         <span
           class="ml-auto font-bold"
-          x-text="products[currentItem].quantity === 0 ? 'Hết hàng' : products[currentItem].quantity"
+          x-text="items[currentItem].quantity === 0 ? 'Hết hàng' : items[currentItem].quantity"
         >0</span>
       </div>
       <div class="w-full mt-6 flex items-center place-content-between">
         <span class="title-font font-medium text-2xl">
-          <span x-text="products[currentItem].price"></span>K
+          <span x-text="items[currentItem].price"></span>K
         </span>
         <div class="form-control">
           <div
             class="input-group bg-transparent"
-            :class="products[currentItem].quantity == 0 ? 'btn-disabled opacity-50' : ''"
+            :class="items[currentItem].quantity == 0 ? 'btn-disabled opacity-50' : ''"
           >
             <input
               type="number"
               class="input input-bordered input-primary w-24"
-              min="1" :max="products[currentItem].quantity"
+              min="1" :max="items[currentItem].quantity"
               x-model="currentQuantity"
             >
-            <button class="btn btn-primary">Cho vào giỏ</button>
+            <button
+              class="btn btn-primary"
+              @click="
+                void(0);
+
+                const addedItem = cart.findIndex(item => {
+                  const matchProductId = item.productId === {{ product.id }};
+                  const matchItemId = item.itemId === items[currentItem].id;
+                  return matchProductId && matchItemId;
+                });
+
+                if(addedItem !== -1) { cart.splice(addedItem, 1) };
+
+                cart.push({
+                  productId: {{ product.id }},
+                  itemId: items[currentItem].id,
+                  quantity: currentQuantity,
+                });
+              "
+            >Cho vào giỏ</button>
           </div>
         </div>
       </div>
@@ -112,7 +133,7 @@ permalink: "product/{{ product.id | slug }}/"
     data-repo-id="R_kgDOIBhO_g"
     data-category="Products"
     data-category-id="DIC_kwDOIBhO_s4CRhHt"
-    data-mapping="title"
+    data-mapping="pathname"
     data-strict="0"
     data-reactions-enabled="1"
     data-emit-metadata="0"
