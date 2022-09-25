@@ -20,7 +20,7 @@ title: Giỏ hàng
       <thead>
         <tr>
           <th>Sản phẩm</th>
-          <th>Loại</th>
+          <th>Size</th>
           <th>Giá</th>
           <th></th>
         </tr>
@@ -28,21 +28,21 @@ title: Giỏ hàng
       <tbody>
         <template
           x-for="(cartItem, cartItemIndex) in cart"
-          :key="cartItem.productId + '_' + cartItem.itemId"
+          :key="cartItem.productId + '_' + cartItem.size"
         >
           <tr
             x-data="
               {
                 product: products.find(product => product.id === cartItem.productId),
-                item: {},
+                size: {},
               }
             "
-            x-init="item = product.items.find(item => item.id === cartItem.itemId)"
+            x-init="size = product.sizes.find(size => size.name === cartItem.size)"
           >
             <td>
               <div class="flex items-center space-x-3">
                 <div class="w-12 h-12">
-                  <img class="rounded" :src="product.images[0]">
+                  <img class="rounded" :src="product.image">
                 </div>
                 <div>
                   <div class="font-bold" x-text="product.title"></div>
@@ -50,13 +50,13 @@ title: Giỏ hàng
                 </div>
               </div>
             </td>
-            <td x-text="item.name"></td>
-            <td x-text="item.price + 'K'"></td>
+            <td x-text="size.name"></td>
+            <td x-text="product.price + 'K'"></td>
             <td>
               <input
                 type="number"
                 class="input input-sm input-bordered w-16 mr-2"
-                min="1" :max="item.quantity"
+                min="1" :max="size.quantity"
                 x-model="cartItem.quantity"
               >
               <button
@@ -78,8 +78,8 @@ title: Giỏ hàng
     x-text="
       cart.map(cartItem => {
         return products
-        .find(product => product.id === cartItem.productId).items
-        .find(item => item.id === cartItem.itemId).price * cartItem.quantity;
+        .find(product => product.id === cartItem.productId)
+        .price * cartItem.quantity;
       }).reduce((sum, a) => sum + a, 0) + '.000'
     "
   >...</span>

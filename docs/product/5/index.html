@@ -2213,9 +2213,10 @@ html {
         <script async src="https://static.addtoany.com/menu/page.js"></script>
       </div>
       <p class="leading-relaxed mb-4 text-justify">
-        Adidas là nhà thiết kế và sản xuất dụng cụ thể thao lớn thứ hai thế giới,
-        được thành lập và điều hành bởi Kasper Rorsted vào năm 1924 với tên ban
-        đầu là Gebruder Dassler Schuhfabrik.
+        Một đôi Adidas được thiết kế với công nghệ tiên tiến chuyên dùng để sản
+        xuất sản phẩm cho các vận động viên chuyên nghiệp sẽ giúp tối ưu hóa
+        hiệu suất hoạt động và tiết kiệm năng lượng cho các hoạt động trong ngày
+        của bạn.
       </p>
       <div class="flex flex-wrap items-center py-4 gap-2 border-y border-base-300">
         <span class="opacity-75">Size:</span>
@@ -2239,7 +2240,7 @@ html {
       </div>
       <div class="w-full mt-6 flex sizes-center items-center place-content-between">
         <span class="title-font font-medium text-2xl">
-          75K
+          1125K
         </span>
         <div class="form-control">
           <div
@@ -2257,9 +2258,9 @@ html {
               @click="
                 void(0);
 
-                const addedItem = cart.findIndex(size => {
-                  const matchProductId = size.productId === 5;
-                  const matchItemId = size.sizeId === sizes[currentSize].id;
+                const addedItem = cart.findIndex(item => {
+                  const matchProductId = item.productId === 5;
+                  const matchItemId = item.size === sizes[currentSize].name;
                   return matchProductId && matchItemId;
                 });
 
@@ -2267,7 +2268,7 @@ html {
 
                 cart.push({
                   productId: 5,
-                  sizeId: sizes[currentSize].id,
+                  size: sizes[currentSize].name,
                   quantity: currentQuantity,
                 });
               "
