@@ -1,16 +1,42 @@
 <!doctype html>
-<html lang="en" x-data="{ cart: $persist([]) }">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adidas - {{ product.title if title === 'Sản phẩm' else title }}</title>
+    <title>Adidas</title>
   	<link rel="icon" href="https://raw.githubusercontent.com/michaelampr/jam/master/icons/store.svg" type="image/svg+xml">
     {% set css %} {% include "src/styles/index.css" %} {% endset %}
     <style>{{css | postcss | safe}}</style>
     <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   </head>
-  <body class="relative" x-cloak>
+  <body
+    class="relative"
+    x-cloak
+    x-data="{
+      auth: null,
+      db: null,
+      cart: $persist([]),
+      admin: $persist(null),
+    }"
+    x-init="
+      firebase.initializeApp({
+        apiKey: 'AIzaSyBkM_2wbvaHhUHqukQYotAUnFks9xnOL_M',
+        authDomain: 'nam-adidas.firebaseapp.com',
+        projectId: 'nam-adidas',
+        storageBucket: 'nam-adidas.appspot.com',
+        messagingSenderId: '257482268958',
+        appId: '1:257482268958:web:184f0b12a6cbf06647e90f',
+        measurementId: 'G-VD43T4Q7GW'
+      });
+
+      auth = firebase.auth();
+      db = firebase.firestore();
+    "
+  >
     <div class="navbar z-50 fixed bg-base-200">
       <div class="flex-1">
         <a
@@ -21,7 +47,7 @@
           Adidas
         </a>
       </div>
-      <div class="flex-none mr-2">
+      <div class="flex gap-2">
         <div class="dropdown dropdown-end">
           <a class="btn btn-ghost btn-circle" href="{{ '/cart' | url }}">
             <div class="indicator">
@@ -34,6 +60,15 @@
             </div>
           </a>
         </div>
+        <a x-show="!admin" class="btn btn-ghost btn-circle" href="{{ '/signin' | url }}">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        </a>
+        <a x-show="admin" class="btn btn-ghost btn-circle" href="{{ '/orders' | url }}">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </a>
+        <button x-show="admin" class="btn btn-ghost btn-circle" @click="admin = null">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
+        </button>
       </div>
     </div>
     {{ content | safe }}

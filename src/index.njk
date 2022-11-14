@@ -3,29 +3,57 @@ layout: layouts/default.njk
 title: Trang chủ
 ---
 
-<div class="container px-5 py-24 mx-auto min-h-screen">
+<div
+  class="container px-5 py-24 mx-auto min-h-screen"
+  x-data="{ products: [] }"
+  x-init="
+    db.collection('products').get()
+    .then(querySnapshot => querySnapshot.forEach(doc => products.unshift(doc)))
+    .catch(error => alert(error));
+  "
+>
   <div class="flex flex-wrap -m-4">
-    <template x-for="product in {{ products | reverse | dump }}" :key="product.id">
-      <div class="lg:w-1/4 md:w-1/3 sm:w-1/2 p-4 w-full hover:scale-105 duration-100">
+    <div x-show="admin" class="lg:w-1/4 md:w-1/3 sm:w-1/2 p-4 w-full">
+      <a
+        class="sm:h-48 h-64 rounded flex items-center justify-center bg-base-300"
+        href="{{ '/edit' | url }}"
+      >
+        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+      </a>
+      </a>
+      <div class="mt-4">
+        <h3
+          class="opacity-75 text-xs tracking-widest title-font mb-1"
+        >-----</h3>
+        <h2
+          class="title-font text-lg font-medium"
+        >Thêm sản phẩm mới</h2>
+      </div>
+    </div>
+    <template x-for="product in products" :key="product.id">
+      <div
+        class="lg:w-1/4 md:w-1/3 sm:w-1/2 p-4 w-full"
+        x-data="{ productData: product.data() }"
+      >
         <a
           class="block relative sm:h-48 h-64 rounded overflow-hidden"
-          :href="'{{ '/product' | url }}/' + product.id"
+          :href="'{{ '/product' | url }}?id=' + product.id"
         >
           <img
             class="object-cover object-bottom w-full h-full block"
-            :src="product.image"
+            :src="productData.image"
           >
         </a>
         <div class="mt-4">
           <h3
             class="opacity-75 text-xs tracking-widest title-font mb-1"
-            x-text="product.subtitle"
+            x-text="productData.subtitle"
           >...</h3>
           <h2
             class="title-font text-lg font-medium"
-            x-text="product.title"
+            x-text="productData.title"
           >...</h2>
-          <p class="mt-1"><span x-text="product.price">0</span>K</p>
+          <p class="mt-1"><span x-text="productData.price">0</span>K</p>
         </div>
       </div>
     </template>

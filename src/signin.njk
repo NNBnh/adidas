@@ -1,0 +1,54 @@
+---
+layout: layouts/default.njk
+title: Đăng nhập
+---
+
+<div
+  class="hero min-h-screen bg-base-300"
+  x-data="{
+    email: '',
+    password: '',
+    signIn() {
+      firebase.auth()
+      .signInWithEmailAndPassword(this.email, this.password)
+      .then(userCredential => {
+        this.admin = userCredential.user;
+        window.location.href = '{{ '/' | url }}';
+      })
+      .catch(error => alert(error.message));
+    },
+  }"
+>
+  <div class="hero-content flex-col gap-16">
+    <h1 class="text-5xl font-bold">Đăng nhập quản lý</h1>
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div class="card-body">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Email</span>
+          </label>
+          <input
+            type="text"
+            placeholder="email"
+            class="input input-bordered"
+            x-model="email"
+          >
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Mật khẩu</span>
+          </label>
+          <input
+            type="password"
+            placeholder="password"
+            class="input input-bordered"
+            x-model="password"
+          >
+        </div>
+        <div class="form-control mt-6">
+          <button class="btn btn-primary" @click="signIn()">Đăng nhập</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

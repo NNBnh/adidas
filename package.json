@@ -1,6 +1,6 @@
 {
-  "name": "11ty-starter",
-  "version": "0.0.0",
+  "name": "adidas-website",
+  "version": "1.0.0",
   "scripts": {
     "dev": "eleventy --serve",
     "build": "eleventy"

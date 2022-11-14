@@ -1,112 +1,76 @@
 ---
 layout: layouts/default.njk
 title: Sản phẩm
-pagination:
-    data: products
-    size: 1
-    alias: product
-permalink: "product/{{ product.id | slug }}/"
 ---
 
 <div
   class="md:container px-5 py-24 mx-auto"
-  x-data="
-    {
-      sizes: {{ product.sizes | dump }},
-      currentSize: 0,
-      currentQuantity: 1,
-    }
+  x-data="{
+    id: (new URLSearchParams(window.location.search)).get('id'),
+    product: {},
+    currentQuantity: 1,
+    addToCart() {
+      this.cart = this.cart.filter(item => item.id !== this.id);
+      this.cart.push({
+        id: this.id,
+        quantity: this.currentQuantity,
+      });
+    },
+    deleteProduct() {
+      db.collection('products').doc(this.id).delete()
+      .then(() => window.location.href = '{{ '/' | url }}')
+      .catch(error => alert(error));
+    },
+  }"
+  x-init="
+    db.collection('products').doc(id).get()
+    .then(doc => product = doc.data())
+    .catch(error => alert(error));
   "
-  x-init="$watch('currentSize', () => currentQuantity = 1)"
 >
   <div class="lg:w-4/5 mx-auto flex flex-wrap">
     <div class="md:w-1/2 w-full md:pr-4 lg:pr-8 md:py-6 mb-6 md:mb-0">
-      <h2 class="text-sm title-font opacity-75 tracking-widest">
-        {{ product.subtitle }}
-      </h2>
-      <h1 class="text-3xl title-font font-medium mb-4">
-        {{ product.title }}
-      </h1>
-      <div class="flex mb-4">
-        <div
-          class="a2a_kit a2a_kit_size_24 a2a_default_style"
-          data-a2a-icon-color="transparent,#40ABB0"
-        >
-          <a class="a2a_button_copy_link"></a>
-          <a class="a2a_button_twitter"></a>
-          <a class="a2a_button_facebook"></a>
-          <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-        </div>
-        <script async src="https://static.addtoany.com/menu/page.js"></script>
-      </div>
+      <h2
+        class="text-sm title-font opacity-75 tracking-widest"
+        x-text="product.subtitle"
+      >Subtitle</h2>
+      <h1
+        class="text-3xl title-font font-medium mb-4"
+        x-text="product.title"
+      >Title</h1>
       <p class="leading-relaxed mb-4 text-justify">
         Một đôi Adidas được thiết kế với công nghệ tiên tiến chuyên dùng để sản
         xuất sản phẩm cho các vận động viên chuyên nghiệp sẽ giúp tối ưu hóa
         hiệu suất hoạt động và tiết kiệm năng lượng cho các hoạt động trong ngày
         của bạn.
       </p>
-      <div class="flex flex-wrap items-center py-4 gap-2 border-y border-base-300">
-        <span class="opacity-75">Size:</span>
-        <template x-for="(size, sizeIndex) in sizes" :key="sizeIndex">
-          <div :class="size.quantity === 0 ? 'opacity-50' : ''">
-            <button
-              class="btn btn-xs"
-              :class="currentSize === sizeIndex ? 'btn-secondary' : 'btn-accent'"
-              x-text="size.name"
-              @click="currentSize = sizeIndex"
-            ></button>
-          </div>
-        </template>
-      </div>
-      <div class="flex py-4 border-b border-base-300">
-        <span class="opacity-75">Số lượng trong kho:</span>
-        <span
-          class="ml-auto font-bold"
-          x-text="sizes[currentSize].quantity === 0 ? 'Hết hàng' : sizes[currentSize].quantity"
-        >0</span>
-      </div>
-      <div class="w-full mt-6 flex sizes-center items-center place-content-between">
+      <div class="w-full my-6 flex sizes-center items-center place-content-between">
         <span class="title-font font-medium text-2xl">
-          {{ product.price }}K
+          <span x-text="product.price">0</span>K
         </span>
         <div class="form-control">
-          <div
-            class="input-group bg-transparent"
-            :class="sizes[currentSize].quantity == 0 ? 'btn-disabled opacity-50' : ''"
-          >
+          <div class="input-group bg-transparent">
             <input
               type="number"
               class="input input-bordered input-primary w-24"
-              min="1" :max="sizes[currentSize].quantity"
+              min="1"
               x-model="currentQuantity"
             >
-            <button
-              class="btn btn-primary"
-              @click="
-                void(0);
-
-                const addedItem = cart.findIndex(item => {
-                  const matchProductId = item.productId === {{ product.id }};
-                  const matchItemId = item.size === sizes[currentSize].name;
-                  return matchProductId && matchItemId;
-                });
-
-                if(addedItem !== -1) { cart.splice(addedItem, 1) };
-
-                cart.push({
-                  productId: {{ product.id }},
-                  size: sizes[currentSize].name,
-                  quantity: currentQuantity,
-                });
-              "
-            >Cho vào giỏ</button>
+            <button class="btn btn-primary" @click="addToCart()">Cho vào giỏ</button>
           </div>
         </div>
+      </div>
+      <div x-show="admin" class="flex gap-2">
+        <a
+          class="btn btn-sm btn-warning"
+          :href="'{{ '/edit' | url }}?id=' + id"
+        >sửa</a>
+        <button class="btn btn-sm btn-error" @click="deleteProduct()">Xóa</button>
       </div>
     </div>
     <img
       class="md:w-1/2 w-full md:h-auto h-72 object-cover object-bottom rounded"
-      src="{{ product.image }}"
+      :src="product.image"
     >
   </div>
 </div>

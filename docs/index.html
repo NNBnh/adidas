@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" x-data="{ cart: $persist([]) }">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adidas - Trang chủ</title>
+    <title>Adidas</title>
   	<link rel="icon" href="https://raw.githubusercontent.com/michaelampr/jam/master/icons/store.svg" type="image/svg+xml">
     
     <style>/*
@@ -522,6 +522,50 @@ html {
   }
 }
 
+.alert {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
+  padding: 1rem;
+  border-radius: var(--rounded-box, 1rem);
+}
+
+.alert > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+@media (min-width: 768px) {
+
+  .alert {
+    flex-direction: row;
+  }
+
+  .alert > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+}
+
+.alert > :where(*) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar.placeholder > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -664,6 +708,69 @@ html {
   content: attr(data-title);
 }
 
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--rounded-box, 1rem);
+}
+
+.card:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: var(--padding-card, 2rem);
+  gap: 0.5rem;
+}
+
+.card-body :where(p) {
+  flex-grow: 1;
+}
+
+.card figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card.image-full {
+  display: grid;
+}
+
+.card.image-full:before {
+  position: relative;
+  content: "";
+  z-index: 10;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity));
+  opacity: 0.75;
+  border-radius: var(--rounded-box, 1rem);
+}
+
+.card.image-full:before, .card.image-full > * {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+.card.image-full > figure img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.card.image-full > .card-body {
+  position: relative;
+  z-index: 20;
+  --tw-text-opacity: 1;
+  color: hsl(var(--nc) / var(--tw-text-opacity));
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -755,6 +862,29 @@ html {
   padding-right: 0.25rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.hero {
+  display: grid;
+  width: 100%;
+  place-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero > * {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+.hero-content {
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 80rem;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .indicator {
@@ -887,6 +1017,21 @@ html {
 .link-hover:hover {
   -webkit-text-decoration-line: underline;
   text-decoration-line: underline;
+}
+
+.menu :where(li:not(.disabled):not(.menu-title)) > :where(*:not(ul)) {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  align-items: center;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.menu > :where(li.disabled > *:not(ul):focus) {
+  cursor: auto;
 }
 
 .navbar {
@@ -1127,6 +1272,26 @@ html {
   outline: 2px solid hsl(var(--a));
 }
 
+.btn-warning {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--wa) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--wa) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));
+}
+
+.btn-warning:hover, .btn-warning.btn-active {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--wa) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--wa) / var(--tw-bg-opacity));
+}
+
+.btn-warning:focus-visible {
+  outline: 2px solid hsl(var(--wa));
+}
+
 .btn-error {
   --tw-border-opacity: 1;
   border-color: hsl(var(--er) / var(--tw-border-opacity));
@@ -1356,6 +1521,23 @@ html {
   }
 }
 
+.card:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.card.bordered {
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));
+}
+
+.card.compact .card-body {
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 @-webkit-keyframes checkmark {
 
   0% {
@@ -1398,6 +1580,10 @@ html {
   outline: 2px solid hsl(var(--a));
 }
 
+.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-warning {
+  outline: 2px solid hsl(var(--wa));
+}
+
 .drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-error {
   outline: 2px solid hsl(var(--er));
 }
@@ -1422,6 +1608,13 @@ html {
 .label-text {
   font-size: 0.875rem;
   line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: hsl(var(--bc) / var(--tw-text-opacity));
+}
+
+.label-text-alt {
+  font-size: 0.75rem;
+  line-height: 1rem;
   --tw-text-opacity: 1;
   color: hsl(var(--bc) / var(--tw-text-opacity));
 }
@@ -1485,6 +1678,29 @@ html {
 .link:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
+}
+
+.menu li.disabled > * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  color: hsl(var(--bc) / var(--tw-text-opacity));
+  --tw-text-opacity: 0.2;
+}
+
+.menu li.disabled > *:hover {
+  background-color: transparent;
+}
+
+.menu :where(li:not(.disabled)) > :where(*:not(ul)) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @-webkit-keyframes radiomark {
@@ -1593,6 +1809,10 @@ html {
   background-color: hsl(var(--b1) / var(--tw-bg-opacity));
 }
 
+.artboard.phone {
+  width: 320px;
+}
+
 .badge-sm {
   height: 1rem;
   font-size: 0.75rem;
@@ -1678,6 +1898,18 @@ html {
   --tw-text-opacity: 1;
   color: hsl(var(--p) / var(--tw-text-opacity));
 }
+
+.card-compact .card-body {
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.card-normal .card-body {
+  padding: var(--padding-card, 2rem);
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
 .fixed {
   position: fixed;
 }
@@ -1709,6 +1941,10 @@ html {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 .mr-2 {
   margin-right: 0.5rem;
@@ -1797,14 +2033,22 @@ html {
 .w-8 {
   width: 2rem;
 }
+.w-fit {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
 .max-w-4xl {
   max-width: 56rem;
+}
+.max-w-sm {
+  max-width: 24rem;
 }
 .flex-1 {
   flex: 1 1 0%;
 }
-.flex-none {
-  flex: none;
+.flex-shrink-0 {
+  flex-shrink: 0;
 }
 .flex-col {
   flex-direction: column;
@@ -1826,6 +2070,12 @@ html {
 }
 .gap-2 {
   gap: 0.5rem;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.gap-16 {
+  gap: 4rem;
 }
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -1870,6 +2120,10 @@ html {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
 }
+.bg-base-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -1887,6 +2141,9 @@ html {
 .p-10 {
   padding: 2.5rem;
 }
+.p-2 {
+  padding: 0.5rem;
+}
 .py-24 {
   padding-top: 6rem;
   padding-bottom: 6rem;
@@ -1899,8 +2156,19 @@ html {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
 .pt-24 {
   padding-top: 6rem;
+}
+.text-center {
+  text-align: center;
 }
 .text-justify {
   text-align: justify;
@@ -1928,6 +2196,10 @@ html {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 .font-bold {
   font-weight: 700;
@@ -1959,6 +2231,11 @@ html {
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .grayscale {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -1982,6 +2259,14 @@ html {
 
   .sm\:w-1\/2 {
     width: 50%;
+  }
+
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+
+  .sm\:gap-4 {
+    gap: 1rem;
   }
 
   .sm\:px-5 {
@@ -2052,6 +2337,10 @@ html {
     margin-bottom: 0px;
   }
 
+  .md\:aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
   .md\:h-auto {
     height: auto;
   }
@@ -2087,15 +2376,49 @@ html {
     width: 80%;
   }
 
+  .lg\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
   .lg\:pr-8 {
     padding-right: 2rem;
+  }
+
+  .lg\:text-left {
+    text-align: left;
   }
 }
  </style>
     <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   </head>
-  <body class="relative" x-cloak>
+  <body
+    class="relative"
+    x-cloak
+    x-data="{
+      auth: null,
+      db: null,
+      cart: $persist([]),
+      admin: $persist(null),
+    }"
+    x-init="
+      firebase.initializeApp({
+        apiKey: 'AIzaSyBkM_2wbvaHhUHqukQYotAUnFks9xnOL_M',
+        authDomain: 'nam-adidas.firebaseapp.com',
+        projectId: 'nam-adidas',
+        storageBucket: 'nam-adidas.appspot.com',
+        messagingSenderId: '257482268958',
+        appId: '1:257482268958:web:184f0b12a6cbf06647e90f',
+        measurementId: 'G-VD43T4Q7GW'
+      });
+
+      auth = firebase.auth();
+      db = firebase.firestore();
+    "
+  >
     <div class="navbar z-50 fixed bg-base-200">
       <div class="flex-1">
         <a
@@ -2106,7 +2429,7 @@ html {
           Adidas
         </a>
       </div>
-      <div class="flex-none mr-2">
+      <div class="flex gap-2">
         <div class="dropdown dropdown-end">
           <a class="btn btn-ghost btn-circle" href="/adidas/cart">
             <div class="indicator">
@@ -2119,32 +2442,69 @@ html {
             </div>
           </a>
         </div>
+        <a x-show="!admin" class="btn btn-ghost btn-circle" href="/adidas/signin">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        </a>
+        <a x-show="admin" class="btn btn-ghost btn-circle" href="/adidas/orders">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </a>
+        <button x-show="admin" class="btn btn-ghost btn-circle" @click="admin = null">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
+        </button>
       </div>
     </div>
     
-<div class="container px-5 py-24 mx-auto min-h-screen">
+<div
+  class="container px-5 py-24 mx-auto min-h-screen"
+  x-data="{ products: [] }"
+  x-init="
+    db.collection('products').get()
+    .then(querySnapshot => querySnapshot.forEach(doc => products.unshift(doc)))
+    .catch(error => alert(error));
+  "
+>
   <div class="flex flex-wrap -m-4">
-    <template x-for="product in [{&quot;id&quot;:44,&quot;title&quot;:&quot;NMD_R1 Shoes&quot;,&quot;subtitle&quot;:&quot;Youth Originals&quot;,&quot;price&quot;:1950,&quot;image&quot;:&quot;https://assets.adidas.com/images/fe6ef16d282a4ff99234ad4e011eaad2_9366/nmd_r1-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:43,&quot;title&quot;:&quot;Astir Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1500,&quot;image&quot;:&quot;https://assets.adidas.com/images/fa829eb61c044a69a3c4ad650104ec2e_9366/astir-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:42,&quot;title&quot;:&quot;NMD_R1 Strap Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/0fe2bcf7e95d44a4bf51ae3201270b48_9366/nmd_r1-strap-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:41,&quot;title&quot;:&quot;NMD_R1 Shoes&quot;,&quot;subtitle&quot;:&quot;Infant &amp; Toddler Originals&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/2f008d5fac5a4b14bc10ae7b017b1b5b_9366/nmd_r1-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:40,&quot;title&quot;:&quot;Solarglide 5 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Running&quot;,&quot;price&quot;:1950,&quot;image&quot;:&quot;https://assets.adidas.com/images/57c0c040f2524bdabe37adf80089b22c_9366/solarglide-5-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:39,&quot;title&quot;:&quot;Forum Low Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1650,&quot;image&quot;:&quot;https://assets.adidas.com/images/42bd00b04b734c48afecae31001f80c7_9366/forum-low-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:38,&quot;title&quot;:&quot;NMD_V3 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:2400,&quot;image&quot;:&quot;https://assets.adidas.com/images/426eb2e40ddf4e34b857ae9300053fe5_9366/nmd_v3-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:37,&quot;title&quot;:&quot;NMD 360 Shoes&quot;,&quot;subtitle&quot;:&quot;Children Origi&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/377fc58ebe1a43e89648ad6a011d83b7_9366/nmd-360-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:36,&quot;title&quot;:&quot;ZNCHILL LIGHTMOTION+ Lifestyle Adult Shoe&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Sportswear&quot;,&quot;price&quot;:1800,&quot;image&quot;:&quot;https://assets.adidas.com/images/d4f7f8a07d994637a937aecc013083b5_9366/znchill-lightmotion-plus-lifestyle-adult-shoe.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:35,&quot;title&quot;:&quot;Ultraboost 5.0 DNA Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Sportswear&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/37d531fc1a8340beb3e2ae7a010326e2_9366/ultraboost-5.0-dna-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:34,&quot;title&quot;:&quot;Forum Mid Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1800,&quot;image&quot;:&quot;https://assets.adidas.com/images/a87733a21ddd41c5a2beae6f014effc5_9366/forum-mid-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:33,&quot;title&quot;:&quot;NMD_R1 Primeblue Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/5facbb3f37b44f5292f6ad1200dd74dd_9366/nmd_r1-primeblue-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:32,&quot;title&quot;:&quot;NMD_R1 Refined Shoes&quot;,&quot;subtitle&quot;:&quot;Youth Originals&quot;,&quot;price&quot;:1950,&quot;image&quot;:&quot;https://assets.adidas.com/images/3ac24c03db31402da184ad1f009361f3_9366/nmd_r1-refined-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:31,&quot;title&quot;:&quot;X_PLR Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Sportswear&quot;,&quot;price&quot;:1350,&quot;image&quot;:&quot;https://assets.adidas.com/images/48660d0207f140d982baa784011770d7_9366/x_plr-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:30,&quot;title&quot;:&quot;Lite Racer Adapt 5.0 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Essentials&quot;,&quot;price&quot;:1050,&quot;image&quot;:&quot;https://assets.adidas.com/images/69c82c9e83ea4ae89a04aed10136500e_9366/lite-racer-adapt-5.0-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:29,&quot;title&quot;:&quot;Superstar Shoes&quot;,&quot;subtitle&quot;:&quot;Youth Originals&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/95e1a36aa4f04a73a80baafc01582e32_9366/superstar-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:28,&quot;title&quot;:&quot;Stan Smith Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1425,&quot;image&quot;:&quot;https://assets.adidas.com/images/410a8b1ce26444fd805eac5a015749b7_9366/stan-smith-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:27,&quot;title&quot;:&quot;NMD_R1 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/c4db7107fe604de9953aae3201265091_9366/nmd_r1-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:26,&quot;title&quot;:&quot;Edge Lux Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Training&quot;,&quot;price&quot;:1350,&quot;image&quot;:&quot;https://assets.adidas.com/images/01cf0f4752e94f8482ccadd7012e1761_9366/edge-lux-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:25,&quot;title&quot;:&quot;Ultraboost DNA Climacool Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Sportswear&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/790cd9f8b33a4936bfd6ae37016127d4_9366/ultraboost-dna-climacool-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:24,&quot;title&quot;:&quot;4DFWD Pulse Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Running&quot;,&quot;price&quot;:2400,&quot;image&quot;:&quot;https://assets.adidas.com/images/032bc0216a9244a781a3ad6500f4e45d_9366/4dfwd-pulse-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:23,&quot;title&quot;:&quot;Ultraboost 22 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Running&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/8c7fcb9d65c143b4a3c8ad7800ac1820_9366/ultraboost-22-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:22,&quot;title&quot;:&quot;Ultraboost 22 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Running&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/76345f3d06cc4d1088f0ae2a0146bb95_9366/ultraboost-22-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:21,&quot;title&quot;:&quot;NMD_R1 V2 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/73fc3e4ebf0642668a7eaec500f7ab36_9366/nmd_r1-v2-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:20,&quot;title&quot;:&quot;Ultraboost 22 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Running&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/9de61a8db115409bbec4ae92012ffb8a_9366/ultraboost-22-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:19,&quot;title&quot;:&quot;Questar Flow NXT Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Essentials&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/7f10636fd9ae4f38816cac5a01471311_9366/questar-flow-nxt-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:18,&quot;title&quot;:&quot;Daily 3.0 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Essentials&quot;,&quot;price&quot;:975,&quot;image&quot;:&quot;https://assets.adidas.com/images/32459476930f446ea828acd2012687b6_9366/daily-3.0-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:17,&quot;title&quot;:&quot;Ultraboost 5.0 DNA Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Sportswear&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/5fe93efae8ee4fa7a285ae370134c365_9366/ultraboost-5.0-dna-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:16,&quot;title&quot;:&quot;Ultraboost 21 Shoes&quot;,&quot;subtitle&quot;:&quot;Youth Running&quot;,&quot;price&quot;:2400,&quot;image&quot;:&quot;https://assets.adidas.com/images/14b9d28eddf3417ca4d2ac8300b2f342_9366/ultraboost-21-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:15,&quot;title&quot;:&quot;NMD_R1 Primeblue Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/e59dfd1d115149b2b182ad110135dfd5_9366/nmd_r1-primeblue-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:14,&quot;title&quot;:&quot;Nizza Platform Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/82cea61db40e42f09f9aabeb000e4b5f_9366/nizza-platform-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:13,&quot;title&quot;:&quot;Swift Run Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1350,&quot;image&quot;:&quot;https://assets.adidas.com/images/a0334969052b42829470ac0e000f8030_9366/swift-run-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:12,&quot;title&quot;:&quot;NMD_R1 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/0d55355591674bb4aa2bae3e011e3a92_9366/nmd_r1-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:11,&quot;title&quot;:&quot;NMD_R1 V2 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Originals&quot;,&quot;price&quot;:2250,&quot;image&quot;:&quot;https://assets.adidas.com/images/724e62e79b6842219901ad6b008b52ca_9366/nmd_r1-v2-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:10,&quot;title&quot;:&quot;NMD_R1 Shoes&quot;,&quot;subtitle&quot;:&quot;Infant &amp; Toddler Originals&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/6f805d0e33cb47e2aab0aec401597876_9366/nmd_r1-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:9,&quot;title&quot;:&quot;Ultraboost DNA 5.0 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Sportswear&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/03bc15b8704945448b8eae28015592b9_9366/ultraboost-dna-5.0-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:8,&quot;title&quot;:&quot;Runfalcon 2.0 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Running&quot;,&quot;price&quot;:900,&quot;image&quot;:&quot;https://assets.adidas.com/images/27c332bccb164c87b8bbac3600c3f700_9366/runfalcon-2.0-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:7,&quot;title&quot;:&quot;ZX 1K Boost Shoes&quot;,&quot;subtitle&quot;:&quot;Youth Originals&quot;,&quot;price&quot;:1350,&quot;image&quot;:&quot;https://assets.adidas.com/images/aa74d304e52d4d3dbd02ac850126eb8a_9366/zx-1k-boost-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:6,&quot;title&quot;:&quot;Cloudfoam Pure 2.0 Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Essentials&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/97d32ff1f35d4931a51dac9101059bd5_9366/cloudfoam-pure-2.0--shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:5,&quot;title&quot;:&quot;Racer TR21 Shoes&quot;,&quot;subtitle&quot;:&quot;Men&#39;s Essentials&quot;,&quot;price&quot;:1125,&quot;image&quot;:&quot;https://assets.adidas.com/images/4fc3a5c648064c9ea30cad1d017fcf10_9366/racer-tr21-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:4,&quot;title&quot;:&quot;NMD_R1 V2 Shoes&quot;,&quot;subtitle&quot;:&quot;Youth Originals&quot;,&quot;price&quot;:1950,&quot;image&quot;:&quot;https://assets.adidas.com/images/4409a0566a534bbdab07ae93006caba9_9366/nmd_r1-v2-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:3,&quot;title&quot;:&quot;OZWEEGO Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1800,&quot;image&quot;:&quot;https://assets.adidas.com/images/17ba16041adc420da0aeae74008bd6ae_9366/ozweego-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:2,&quot;title&quot;:&quot;Superstar Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Originals&quot;,&quot;price&quot;:1425,&quot;image&quot;:&quot;https://assets.adidas.com/images/5bf08ad3b4ff4ed0b2ffaafc0160c604_9366/superstar-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]},{&quot;id&quot;:1,&quot;title&quot;:&quot;Ultraboost DNA Shoes&quot;,&quot;subtitle&quot;:&quot;Women&#39;s Sports&quot;,&quot;price&quot;:2850,&quot;image&quot;:&quot;https://assets.adidas.com/images/54c4b44ab98140a181d6ae280000422d_9366/ultraboost-dna-shoes.jpg&quot;,&quot;sizes&quot;:[{&quot;name&quot;:38,&quot;quantity&quot;:20},{&quot;name&quot;:39,&quot;quantity&quot;:50},{&quot;name&quot;:40,&quot;quantity&quot;:100},{&quot;name&quot;:41,&quot;quantity&quot;:200},{&quot;name&quot;:42,&quot;quantity&quot;:100},{&quot;name&quot;:43,&quot;quantity&quot;:0}]}]" :key="product.id">
-      <div class="lg:w-1/4 md:w-1/3 sm:w-1/2 p-4 w-full hover:scale-105 duration-100">
+    <div x-show="admin" class="lg:w-1/4 md:w-1/3 sm:w-1/2 p-4 w-full">
+      <a
+        class="sm:h-48 h-64 rounded flex items-center justify-center bg-base-300"
+        href="/adidas/edit"
+      >
+        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+      </a>
+      </a>
+      <div class="mt-4">
+        <h3
+          class="opacity-75 text-xs tracking-widest title-font mb-1"
+        >-----</h3>
+        <h2
+          class="title-font text-lg font-medium"
+        >Thêm sản phẩm mới</h2>
+      </div>
+    </div>
+    <template x-for="product in products" :key="product.id">
+      <div
+        class="lg:w-1/4 md:w-1/3 sm:w-1/2 p-4 w-full"
+        x-data="{ productData: product.data() }"
+      >
         <a
           class="block relative sm:h-48 h-64 rounded overflow-hidden"
-          :href="'/adidas/product/' + product.id"
+          :href="'/adidas/product?id=' + product.id"
         >
           <img
             class="object-cover object-bottom w-full h-full block"
-            :src="product.image"
+            :src="productData.image"
           >
         </a>
         <div class="mt-4">
           <h3
             class="opacity-75 text-xs tracking-widest title-font mb-1"
-            x-text="product.subtitle"
+            x-text="productData.subtitle"
           >...</h3>
           <h2
             class="title-font text-lg font-medium"
-            x-text="product.title"
+            x-text="productData.title"
           >...</h2>
-          <p class="mt-1"><span x-text="product.price">0</span>K</p>
+          <p class="mt-1"><span x-text="productData.price">0</span>K</p>
         </div>
       </div>
     </template>

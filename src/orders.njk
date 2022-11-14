@@ -1,0 +1,70 @@
+---
+layout: layouts/default.njk
+title: Đơn hàng
+---
+
+<div
+  x-data="{
+    orders: [],
+    deleteOrder(orderIndex, id) {
+      this.orders.splice(orderIndex, 1);
+      db.collection('orders').doc(id).delete()
+      .then().catch(error => alert(error));
+    },
+  }"
+  x-init="
+    db.collection('orders').get()
+    .then(querySnapshot => querySnapshot.forEach(doc => orders.unshift(doc)))
+    .catch(error => alert(error));
+  "
+>
+
+<div class="max-w-4xl min-h-screen py-24 sm:px-5 mx-auto flex flex-col gap-16">
+  <template x-for="(order, orderIndex) in orders" :key="order.id">
+    <div class="overflow-x-auto w-full" x-data="{ orderData: order.data() }">
+      <div class="w-full p-2 flex justify-center gap-2">
+        <input type="text" class="input input-sm input-bordered" :value="orderData.name"    readonly>
+        <input type="text" class="input input-sm input-bordered" :value="orderData.address" readonly>
+        <input type="text" class="input input-sm input-bordered" :value="orderData.phone"   readonly>
+        <button class="btn btn-sm btn-error" @click="deleteOrder(orderIndex, order.id)">Xóa</button>
+      </div>
+      <table class="table w-full">
+        <thead>
+          <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="(item, itemIndex) in orderData.items" :key="item.id">
+            <tr>
+              <td>
+                <div class="flex items-center space-x-3">
+                  <div class="w-12 h-12">
+                    <img class="rounded" :src="item.data.image">
+                  </div>
+                  <div>
+                    <div class="font-bold" x-text="item.data.title"></div>
+                    <div class="text-sm opacity-50" x-text="item.data.subtitle"></div>
+                  </div>
+                </div>
+              </td>
+              <td x-text="item.data.price + 'K'"></td>
+              <td>
+                <input
+                  type="number"
+                  class="input input-sm input-bordered w-16 mr-2"
+                  :value="item.quantity"
+                  disabled
+                >
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </template>
+</div>
+
+</div>

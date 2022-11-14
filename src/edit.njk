@@ -1,0 +1,96 @@
+---
+layout: layouts/default.njk
+title: Sản phẩm
+---
+
+<div
+  class="hero min-h-screen bg-base-300"
+  x-data="{
+    id: (new URLSearchParams(window.location.search)).get('id'),
+    product: {
+      title: '',
+      subtitle: '',
+      price: 0,
+      image: '',
+    },
+    update() {
+      if(this.id) {
+        db.collection('products').doc(this.id).set(this.product)
+        .then(() => window.location.href = '{{ '/product' | url }}?id=' + this.id)
+        .catch(error => alert(error));
+      } else {
+        db.collection('products').add(this.product)
+        .then(docRef => window.location.href = '{{ '/product' | url }}?id=' + docRef.id)
+        .catch(error => alert(error));
+      }
+    },
+  }"
+  x-init="
+    if(!id) return;
+    db.collection('products').doc(id).get()
+    .then(doc => product = doc.data())
+    .catch(error => alert(error));
+  "
+>
+  <div class="hero-content flex-col">
+    <div class="card flex-shrink-0 w-full shadow-2xl bg-base-100">
+      <div class="card-body">
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Title</span>
+            </label>
+            <input
+              type="text"
+              placeholder="title"
+              class="input input-bordered"
+              x-model="product.title"
+            >
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Subtitle</span>
+            </label>
+            <input
+              type="text"
+              placeholder="subtitle"
+              class="input input-bordered"
+              x-model="product.subtitle"
+            >
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Giá</span>
+            </label>
+            <input
+              type="number"
+              placeholder="0"
+              class="input input-bordered"
+              x-model="product.price"
+            >
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Ảnh (URL)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="https://..."
+              class="input input-bordered"
+              x-model="product.image"
+            >
+          </div>
+        </div>
+        <div class="form-control mt-6">
+          <button
+            class="btn btn-primary"
+            @click="update()"
+            x-text="id ? 'Sửa sản phẩm' : 'Thêm sản phẩm'"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

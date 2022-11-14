@@ -12,57 +12,67 @@ title: Giỏ hàng
   <a class="btn btn-primary" href="{{ '/' | url }}">Quay lại của hàng</a>
 </div>
 
-<div x-show="cart.length > 0" x-data="{ products: {{ products | dump }} }">
+<div
+  x-show="cart.length > 0"
+  x-data="{
+    cartItems: [],
+    removeItems(cartItemIndex) {
+      this.cartItems.splice(cartItemIndex, 1);
+      this.cart.splice(cartItemIndex, 1);
+    },
+  }"
+  x-init="
+    db.collection('products').get()
+    .then(querySnapshot => {
+      let products = [];
 
-<div class="max-w-4xl pt-24 sm:px-5 mx-auto">
+      querySnapshot.forEach(doc => products.unshift(doc));
+      cart.forEach(cartItem => {
+        cartItems.push({
+          ...cartItem,
+          data: products.find(product => product.id === cartItem.id).data()
+        });
+      });
+    });
+  "
+>
+
+<div class="max-w-4xl py-24 sm:px-5 mx-auto">
   <div class="overflow-x-auto w-full">
     <table class="table w-full">
       <thead>
         <tr>
           <th>Sản phẩm</th>
-          <th>Size</th>
           <th>Giá</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <template
-          x-for="(cartItem, cartItemIndex) in cart"
-          :key="cartItem.productId + '_' + cartItem.size"
-        >
-          <tr
-            x-data="
-              {
-                product: products.find(product => product.id === cartItem.productId),
-                size: {},
-              }
-            "
-            x-init="size = product.sizes.find(size => size.name === cartItem.size)"
-          >
+        <template x-for="(cartItem, cartItemIndex) in cartItems" :key="cartItem.id">
+          <tr>
             <td>
               <div class="flex items-center space-x-3">
                 <div class="w-12 h-12">
-                  <img class="rounded" :src="product.image">
+                  <img class="rounded" :src="cartItem.data.image">
                 </div>
                 <div>
-                  <div class="font-bold" x-text="product.title"></div>
-                  <div class="text-sm opacity-50" x-text="product.subtitle"></div>
+                  <div class="font-bold" x-text="cartItem.data.title"></div>
+                  <div class="text-sm opacity-50" x-text="cartItem.data.subtitle"></div>
                 </div>
               </div>
             </td>
-            <td x-text="size.name"></td>
-            <td x-text="product.price + 'K'"></td>
+            <td x-text="cartItem.data.price + 'K'"></td>
             <td>
               <input
                 type="number"
                 class="input input-sm input-bordered w-16 mr-2"
-                min="1" :max="size.quantity"
+                min="1"
                 x-model="cartItem.quantity"
               >
               <button
-                class="btn btn-sm btn-circle btn-outline btn-error"
-                @click="cart.splice(cartItemIndex, 1)"
-              >X</button>
+                class="btn btn-sm btn-outline btn-error"
+                @click="removeItems(cartItemIndex)"
+              >Xóa</button>
             </td>
           </tr>
         </template>
@@ -71,68 +81,60 @@ title: Giỏ hàng
   </div>
 </div>
 
-<div class="max-w-4xl py-24 px-5 mx-auto flex items-center gap-2">
-  <span class="title-font sm:text-2xl">Tổng tiền:</span>
-  <span
-    class="title-font text-xl sm:text-3xl font-bold"
-    x-text="
-      cart.map(cartItem => {
-        return products
-        .find(product => product.id === cartItem.productId)
-        .price * cartItem.quantity;
-      }).reduce((sum, a) => sum + a, 0) + '.000'
-    "
-  >...</span>
-  <sup>VND</sup>
-  <a class="btn btn-primary ml-auto" href="#buy">Đặt hàng</a>
-</div>
-
 <div
-  id="buy"
-  class="body-font relative"
-  x-data="{ userName: '', userAddress: '', userPhoneNumber: '' }"
+  class="py-16"
+  x-data="{
+    order: {
+      name: '',
+      address: '',
+      phone: '',
+    },
+    uploadOrder() {
+      cart = [];
+      db.collection('orders').add({ ...this.order, items: cartItems })
+      .then(() => window.location.href = '{{ '/' | url }}')
+      .catch(error => alert(error));
+    },
+  }"
 >
-  <div class="absolute inset-0 bg-gray-300">
-    <iframe 
-      style="filter: grayscale(1) contrast(1.2) opacity(0.4);"
-      marginheight="0" marginwidth="0" title="map" scrolling="no"
-      src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=HaNoi&ie=UTF8&t=&z=10&iwloc=B&output=embed"
-      width="100%" height="100%" frameborder="0"
-    ></iframe>
-  </div>
-  <div class="container px-5 py-24 mx-auto flex">
-    <div class="lg:w-1/3 md:w-1/2 bg-base-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
-      <h2 class="mx-auto text-lg font-medium title-font">Điền đơn hàng</h2>
-      <div class="form-control w-full my-8">
-        <label class="label">
-          <span class="label-text">Họ và Tên</span>
-        </label>
-        <input
-          type="text"
-          class="input input-bordered w-full"
-          x-model="userName"
-        >
-        <label class="label">
-          <span class="label-text">Địa chỉ giao hàng</span>
-        </label>
-        <input
-          type="text"
-          class="input input-bordered w-full"
-          x-model="userAddress"
-        >
-        <label class="label">
-          <span class="label-text">Số điện thoại</span>
-        </label>
-        <input
-          type="text"
-          class="input input-bordered w-full"
-          x-model="userPhoneNumber"
-        >
+  <div class="hero-content flex-col gap-16">
+    <h1 class="text-3xl font-bold">Điền đơn hàng</h1>
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-200">
+      <div class="card-body">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Họ và Tên</span>
+          </label>
+          <input
+            type="text"
+            class="input input-bordered"
+            x-model="order.name"
+          >
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Địa chỉ giao hàng</span>
+          </label>
+          <input
+            type="text"
+            class="input input-bordered"
+            x-model="order.address"
+          >
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Số điện thoại</span>
+          </label>
+          <input
+            type="text"
+            class="input input-bordered"
+            x-model="order.phone"
+          >
+        </div>
+        <div class="form-control mt-6">
+          <button class="btn btn-primary" @click="uploadOrder()">Đặt Ngay!</button>
+        </div>
       </div>
-      <label
-        class="btn btn-primary"
-        @click="cart = []; window.location.href = '{{ '/' | url }}'"
-      >Đặt Ngay!</label>
     </div>
   </div>
 </div>

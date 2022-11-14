@@ -1019,21 +1019,6 @@ html {
   text-decoration-line: underline;
 }
 
-.menu :where(li:not(.disabled):not(.menu-title)) > :where(*:not(ul)) {
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-  align-items: center;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.menu > :where(li.disabled > *:not(ul):focus) {
-  cursor: auto;
-}
-
 .navbar {
   display: flex;
   align-items: center;
@@ -1680,29 +1665,6 @@ html {
   outline-offset: 2px;
 }
 
-.menu li.disabled > * {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-  color: hsl(var(--bc) / var(--tw-text-opacity));
-  --tw-text-opacity: 0.2;
-}
-
-.menu li.disabled > *:hover {
-  background-color: transparent;
-}
-
-.menu :where(li:not(.disabled)) > :where(*:not(ul)) {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 @-webkit-keyframes radiomark {
 
   0% {
@@ -2033,11 +1995,6 @@ html {
 .w-8 {
   width: 2rem;
 }
-.w-fit {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-}
 .max-w-4xl {
   max-width: 56rem;
 }
@@ -2140,9 +2097,6 @@ html {
 }
 .p-10 {
   padding: 2.5rem;
-}
-.p-2 {
-  padding: 0.5rem;
 }
 .py-24 {
   padding-top: 6rem;
@@ -2259,14 +2213,6 @@ html {
 
   .sm\:w-1\/2 {
     width: 50%;
-  }
-
-  .sm\:flex-row {
-    flex-direction: row;
-  }
-
-  .sm\:gap-4 {
-    gap: 1rem;
   }
 
   .sm\:px-5 {
@@ -2445,9 +2391,6 @@ html {
         <a x-show="!admin" class="btn btn-ghost btn-circle" href="/adidas/signin">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
         </a>
-        <a x-show="admin" class="btn btn-ghost btn-circle" href="/adidas/orders">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        </a>
         <button x-show="admin" class="btn btn-ghost btn-circle" @click="admin = null">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
         </button>
@@ -2458,7 +2401,7 @@ html {
   class="md:container px-5 py-24 mx-auto"
   x-data="{
     id: (new URLSearchParams(window.location.search)).get('id'),
-    product: {},
+    product: [],
     currentQuantity: 1,
     addToCart() {
       this.cart = this.cart.filter(item => item.id !== this.id);
